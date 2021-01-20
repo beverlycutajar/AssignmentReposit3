@@ -18,5 +18,7 @@ namespace ShoppingCart.Domain.Models
         public int Stock { get; set; }
         [Required]
         public Category Category { get; set; }
+
+        public string ImageId { get; set; }
     }
 }
