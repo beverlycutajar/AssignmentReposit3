@@ -12,7 +12,7 @@ namespace ShoppingCart.Data.Repositories
     public class ProductsRepository : IProductsRepository //this class connects to the database, does an operation while managing the database data
                                                             //there are no validations or filtering here
     {
-        private ShoppingCartDbContext _context;
+        ShoppingCartDbContext _context;
         public ProductsRepository(ShoppingCartDbContext context)
         {
             _context = context;
@@ -34,7 +34,7 @@ namespace ShoppingCart.Data.Repositories
 
         public Product GetProduct(Guid id)
         {
-            return _context.Products.Include(x=>x.Category).SingleOrDefault(x => x.Id == id);
+            return _context.Products.SingleOrDefault(x => x.Id == id);
         }
 
         public IQueryable<Product> GetProducts()

@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<ShoppingCart.Application.ViewModels.ProductViewModel>
 
 
-<h1>Index</h1>
+<h1>Products</h1>
+
 
 
 <div class="container">
@@ -13,11 +14,12 @@
                     
                         <img src="@m.ImageURL" class="image" alt="image" crossorigin="anonymous" />
                     
-                    <div class="card-body">
-                        <h5 class="card-title">@m.Name</h5>
-                        <p class="card-text">@m.Price</p>
-                        <a href="Products/Details?id=@m.Id" class="btn btn-dark">Details</a>
-                    </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@m.Name</h5>
+                            <p class="card-text">@m.Price</p>
+                            <a href="Products/Details?id=@m.Id" class="btn btn-dark">Details</a>
+                            <a href="Products/Delete?id=@m.Id" class="btn btn-danger" onclick="return window.confirm("Are you sure?")>Delete</a>
+                        </div>
                 </div>
             </div>
         }
