@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShoppingCart.Data.Context;
+using ShoppingCart.IOC;
 
 namespace PresentationApp
 {
@@ -32,9 +33,7 @@ namespace PresentationApp
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDbContext<ShoppingCartDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            
 
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -42,6 +41,8 @@ namespace PresentationApp
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            DependencyContainer.RegisterServices(services, Configuration.GetConnectionString("DefaultConnection"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

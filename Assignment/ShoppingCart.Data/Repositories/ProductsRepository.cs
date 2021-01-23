@@ -1,4 +1,5 @@
-﻿using ShoppingCart.Data.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using ShoppingCart.Data.Context;
 using ShoppingCart.Domain.Interfaces;
 using ShoppingCart.Domain.Models;
 using System;
@@ -8,31 +9,37 @@ using System.Text;
 
 namespace ShoppingCart.Data.Repositories
 {
-    public class ProductsRepository : IProductsRepository
+    public class ProductsRepository : IProductsRepository //this class connects to the database, does an operation while managing the database data
+                                                            //there are no validations or filtering here
     {
-        ShoppingCartDbContext _context;
-        ProductsRepository(ShoppingCartDbContext context)
+        private ShoppingCartDbContext _context;
+        public ProductsRepository(ShoppingCartDbContext context)
         {
-            context = _context;
+            _context = context;
         }
         public Guid AddProduct(Product p)
         {
-            throw new NotImplementedException();
+            _context.Products.Add(p);
+            _context.SaveChanges();
+
+            return p.Id;
         }
 
         public void DeleteProduct(Guid id)
         {
-            throw new NotImplementedException();
+            Product p = GetProduct(id);
+            _context.Products.Remove(p);
+            _context.SaveChanges();
         }
 
-        public Product GetProduct()
+        public Product GetProduct(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.Products.SingleOrDefault(x => x.Id == id);
         }
 
         public IQueryable<Product> GetProducts()
         {
-            throw new NotImplementedException();
+            return _context.Products.Include(x => x.Category);
         }
     }
 }
