@@ -11,5 +11,10 @@ namespace ShoppingCart.Application.Interfaces
     {
         IQueryable<ProductViewModel> GetProducts(); //convert IQuesryable<product> to iqueryable<productViewmodel>
 
+        ProductViewModel GetProduct(Guid id); // returns the details
+
+        void AddProduct(ProductViewModel model);
+
+        
     }
 }

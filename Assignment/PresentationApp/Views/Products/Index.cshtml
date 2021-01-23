@@ -1,22 +1,22 @@
 ﻿@model IEnumerable<ShoppingCart.Application.ViewModels.ProductViewModel>
-}
+
 
 <h1>Index</h1>
 
 
-<div class="containe">
-    <div class="row">
+<div class="container">
+    <div class="row" >
         @foreach (var m in Model)
         {
             <div class="col-sm-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="image">
+                <div class="card" style="width: 18rem; " >
+                    
                         <img src="@m.ImageURL" class="image" alt="image" crossorigin="anonymous" />
-                    </div>
+                    
                     <div class="card-body">
                         <h5 class="card-title">@m.Name</h5>
                         <p class="card-text">@m.Price</p>
-                        <a href="#" class="btn btn-primary">Details</a>
+                        <a href="Products/Details?id=@m.Id" class="btn btn-dark">Details</a>
                     </div>
                 </div>
             </div>

@@ -13,6 +13,7 @@ namespace ShoppingCart.Application.ViewModels
         public double Price { get; set; }
         public CategoryViewModel Category { get; set; }
         public string ImageURL { get; set; }
+        public int Stock { get; set; }
 
         //public List<CategoryViewModel> Categories {get;set;}   LISTA TA KATEGORIJI
     }

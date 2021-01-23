@@ -17,8 +17,9 @@ namespace ShoppingCart.Domain.Models
         public double Price { get; set; }
         public int Stock { get; set; }
         [Required]
-        public Category Category { get; set; }
-
+        public virtual Category Category { get; set; }
+        [ForeignKey("Category")]
+        public int CategoryId { get; set; }
         public string ImageId { get; set; }
     }
 }

@@ -14,7 +14,8 @@ namespace ShoppingCart.IOC
     public class DependencyContainer
     {
 
-        public static void RegisterServices(IServiceCollection services, string ConnectionString)
+        public static void RegisterServices(IServiceCollection services, string ConnectionString) // with every new interface, because of DI .. we need to 
+                                                                                //put an association with theis services collection
         {
             services.AddDbContext<ShoppingCartDbContext>(options =>
             options.UseSqlServer(
@@ -22,6 +23,8 @@ namespace ShoppingCart.IOC
 
             services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped<IProductsService, ProductsService>();
+            services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+            services.AddScoped<ICategoriesService, CategoriesService>();
         }
     }
 }

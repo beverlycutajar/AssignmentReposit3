@@ -18,7 +18,27 @@ namespace ShoppingCart.Application.Services
         {
             _productsRepository = productsRepository;
         }
-    
+
+        public void AddProduct(ProductViewModel model)
+        {
+            Product p = new Product()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                ImageId = model.ImageURL,
+                Stock=model.Stock,
+                CategoryId = model.Category.Id
+            };  
+            _productsRepository.AddProduct(p);
+        }
+
+        public ProductViewModel GetProduct(Guid id) //return details
+        {
+            var p = GetProducts().SingleOrDefault(x => x.Id == id);
+            return p;
+        }
+
         public IQueryable<ProductViewModel> GetProducts()//convert IQuesryable<product> to iqueryable<productViewmodel>
         {
             var list = from p in _productsRepository.GetProducts()
@@ -29,6 +49,7 @@ namespace ShoppingCart.Application.Services
                            ImageURL = p.ImageId,
                            Description = p.Description,
                            Price = p.Price,
+                           Stock=p.Stock,
                            Category = new CategoryViewModel(){ Id = p.Category.Id, Name = p.Category.Name }
                        };
             return list;
