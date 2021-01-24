@@ -24,8 +24,15 @@ namespace PresentationApp.Controllers
         }
         public IActionResult Index()
         {
-            var list = _prodService.GetProducts();
-            return View(list);
+            try
+            {
+                var list = _prodService.GetProducts();
+                return View(list);
+            }
+            catch
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         [Authorize(Roles ="mgr")]
@@ -65,25 +72,28 @@ namespace PresentationApp.Controllers
         {
             try
             {
-                if (data.File != null)
+                if (data.Product.Price != 0 && data.Product.Stock != 0 && data.Product.Name !=null)
                 {
-                    if(data.File.Length > 0)
+                    if (data.File != null)
                     {
-                        string newFileName = @"/images/"+ Guid.NewGuid() + System.IO.Path.GetExtension(data.File.FileName);
-                        string absPath = _webHostingEnviornment.WebRootPath;
-                        using(var stream = System.IO.File.Create(absPath+newFileName))
+                        if (data.File.Length > 0)
                         {
-                            data.File.CopyTo(stream);
+                            string newFileName = @"/images/" + Guid.NewGuid() + System.IO.Path.GetExtension(data.File.FileName);
+                            string absPath = _webHostingEnviornment.WebRootPath;
+                            using (var stream = System.IO.File.Create(absPath + newFileName))
+                            {
+                                data.File.CopyTo(stream);
+                            }
+
+                            data.Product.ImageURL = newFileName;
                         }
-
-                        data.Product.ImageURL = newFileName;
                     }
+
+                    _prodService.AddProduct(data.Product);
+
+                    ViewData["feedback"] = "Product added successfully";
+                    ModelState.Clear(); //MHUX JEHODA #giveup
                 }
-
-                _prodService.AddProduct(data.Product);
-
-                ViewData["feedback"] = "Product added successfully";
-                ModelState.Clear(); //MHUX JEHODA #giveup
             }
             catch (Exception ex)
             {
