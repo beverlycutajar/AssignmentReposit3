@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PresentationApp.Models;
 using ShoppingCart.Application.Interfaces;
@@ -24,6 +25,7 @@ namespace PresentationApp.Controllers
             return View(list);
         }
 
+        [Authorize(Roles ="mgr")]
         public IActionResult Delete(Guid id)
         {
             _prodService.DeleteProduct(id);
@@ -41,6 +43,7 @@ namespace PresentationApp.Controllers
             //return View(_prodService.GetProduct(id));
         }
 
+        [Authorize(Roles = "mgr")]
         [HttpGet]
         public IActionResult Create() //used to load the page with the empty textboxed to update the below method
         {
@@ -54,6 +57,7 @@ namespace PresentationApp.Controllers
         }
         
         [HttpPost]
+        [Authorize(Roles = "mgr")]
         public IActionResult Create (CreateModel data) // this is triggered when the submit method is clicked
         {
             try
@@ -73,5 +77,10 @@ namespace PresentationApp.Controllers
            
             return View(data);
         }
+
+       // public IActionResult Search(int category) {
+          //  var list = _prodService.GetProducts(category); 
+         //   return RedirectToAction("Index" , list)
+       // } //search by category
     }
 }

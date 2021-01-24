@@ -17,6 +17,7 @@ namespace ShoppingCart.Application.Interfaces
 
         void DeleteProduct(Guid id);
 
-        
+        //IQueryable<ProductViewModel> GetProducts(int categoryId);
+
     }
 }
