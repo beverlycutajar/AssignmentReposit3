@@ -25,6 +25,8 @@ namespace ShoppingCart.IOC
             services.AddScoped<IProductsService, ProductsService>();
             services.AddScoped<ICategoriesRepository, CategoriesRepository>();
             services.AddScoped<ICategoriesService, CategoriesService>();
+            services.AddScoped<IClientService, ClientsService>();
+            services.AddScoped<IClientsRepository, ClientsRepository>();
         }
     }
 }

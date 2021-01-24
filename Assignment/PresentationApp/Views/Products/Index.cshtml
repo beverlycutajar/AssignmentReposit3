@@ -18,7 +18,10 @@
                             <h5 class="card-title">@m.Name</h5>
                             <p class="card-text">@m.Price</p>
                             <a href="Products/Details?id=@m.Id" class="btn btn-dark">Details</a>
+                            @if (User.IsInRole("mgr"))
+                            {
                             <a href="Products/Delete?id=@m.Id" class="btn btn-danger" onclick="return window.confirm("Are you sure?")>Delete</a>
+                            }
                         </div>
                 </div>
             </div>

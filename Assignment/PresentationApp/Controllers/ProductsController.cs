@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using PresentationApp.Models;
 using ShoppingCart.Application.Interfaces;
@@ -13,10 +15,12 @@ namespace PresentationApp.Controllers
     {
         private IProductsService _prodService;
         private ICategoriesService _categoriesService;
-        public ProductsController(IProductsService prodService, ICategoriesService categoriesService)
+        private IWebHostEnvironment _webHostingEnviornment;
+        public ProductsController(IProductsService prodService, ICategoriesService categoriesService, IWebHostEnvironment env)
         {
             _prodService = prodService;
             _categoriesService = categoriesService;
+            _webHostingEnviornment = env;
         }
         public IActionResult Index()
         {
@@ -24,6 +28,7 @@ namespace PresentationApp.Controllers
             return View(list);
         }
 
+        [Authorize(Roles ="mgr")]
         public IActionResult Delete(Guid id)
         {
             _prodService.DeleteProduct(id);
@@ -42,6 +47,7 @@ namespace PresentationApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="mgr")]
         public IActionResult Create() //used to load the page with the empty textboxed to update the below method
         {
             var list = _categoriesService.GetCategories();
@@ -54,10 +60,26 @@ namespace PresentationApp.Controllers
         }
         
         [HttpPost]
+        [Authorize(Roles ="mgr")]
         public IActionResult Create (CreateModel data) // this is triggered when the submit method is clicked
         {
             try
             {
+                if (data.File != null)
+                {
+                    if(data.File.Length > 0)
+                    {
+                        string newFileName = @"/images/"+ Guid.NewGuid() + System.IO.Path.GetExtension(data.File.FileName);
+                        string absPath = _webHostingEnviornment.WebRootPath;
+                        using(var stream = System.IO.File.Create(absPath+newFileName))
+                        {
+                            data.File.CopyTo(stream);
+                        }
+
+                        data.Product.ImageURL = newFileName;
+                    }
+                }
+
                 _prodService.AddProduct(data.Product);
 
                 ViewData["feedback"] = "Product added successfully";
