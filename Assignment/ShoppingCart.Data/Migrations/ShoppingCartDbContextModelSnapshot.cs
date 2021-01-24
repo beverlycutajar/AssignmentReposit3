@@ -35,22 +35,6 @@ namespace ShoppingCart.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("ShoppingCart.Domain.Models.Member", b =>
-                {
-                    b.Property<string>("email")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("email");
-
-                    b.ToTable("Members");
-                });
-
             modelBuilder.Entity("ShoppingCart.Domain.Models.Product", b =>
                 {
                     b.Property<Guid>("Id")

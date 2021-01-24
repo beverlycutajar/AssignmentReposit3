@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using ShoppingCart.Application.Interfaces;
 
 namespace PresentationApp.Areas.Identity.Pages.Account
 {
@@ -24,21 +23,17 @@ namespace PresentationApp.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly IMemberService _memberService;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
-            IMemberService memberService)
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
-            _memberService = memberService;
-
         }
 
         [BindProperty]
@@ -65,8 +60,6 @@ namespace PresentationApp.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -85,19 +78,6 @@ namespace PresentationApp.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    //memberService is called to AddNewMember
-                    _memberService.AddMember(
-                        new ShoppingCart.Application.ViewModels.MemberViewModel()
-                        {
-                            Email = Input.Email,
-                            FirstName=Input.FirstName,
-                            LastName=Input.LastName
-                        }
-                        );
-
-                    await _userManager.AddToRoleAsync(user, "User"); //user is the default role
-
-
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

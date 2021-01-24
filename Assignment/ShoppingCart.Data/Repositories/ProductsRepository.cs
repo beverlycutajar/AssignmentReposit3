@@ -19,7 +19,6 @@ namespace ShoppingCart.Data.Repositories
         }
         public Guid AddProduct(Product p)
         {
-            p.Category = null;
             _context.Products.Add(p);
             _context.SaveChanges();
 
