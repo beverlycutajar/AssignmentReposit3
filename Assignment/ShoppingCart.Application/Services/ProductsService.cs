@@ -1,4 +1,5 @@
-﻿using ShoppingCart.Application.Interfaces;
+﻿using AutoMapper;
+using ShoppingCart.Application.Interfaces;
 using ShoppingCart.Application.ViewModels;
 using ShoppingCart.Domain.Interfaces;
 using ShoppingCart.Domain.Models;
@@ -13,15 +14,17 @@ namespace ShoppingCart.Application.Services
     {
 
         private IProductsRepository _productsRepository;
+        private IMapper _mapper;
 
-       public  ProductsService(IProductsRepository productsRepository)
+       public  ProductsService(IProductsRepository productsRepository, IMapper mapper)
         {
             _productsRepository = productsRepository;
+            _mapper = mapper;
         }
 
         public void AddProduct(ProductViewModel model)
         {
-            Product p = new Product()
+            /*Product p = new Product()
             {
                 Name = model.Name,
                 Description = model.Description,
@@ -30,7 +33,9 @@ namespace ShoppingCart.Application.Services
                 Stock=model.Stock,
                 CategoryId = model.Category.Id
             };  
-            _productsRepository.AddProduct(p);
+            _productsRepository.AddProduct(p);*/
+
+            _productsRepository.AddProduct(_mapper.Map<Product>(model));
         }
 
         public void DeleteProduct(Guid id)

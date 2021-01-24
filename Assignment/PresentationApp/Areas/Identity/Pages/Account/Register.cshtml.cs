@@ -90,7 +90,7 @@ namespace PresentationApp.Areas.Identity.Pages.Account
                         LastName = Input.LastName
                     });
 
-                     _userManager.AddToRoleAsync(user, "normal");
+                     await _userManager.AddToRoleAsync(user, "User");
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
