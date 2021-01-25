@@ -13,5 +13,7 @@ namespace PresentationApp.Models
         public List<CategoryViewModel> Categories { get; set; }
 
         public IFormFile File { get; set; }
+        public OrderViewModel Order { get; set; }
+        public OrderDetailsViewModel OrderDetails { get; set; }
     }
 }

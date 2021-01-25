@@ -25,6 +25,6 @@ namespace ShoppingCart.Application.ViewModels
         [Required(ErrorMessage = "Please enter the stock")]
         public int Stock { get; set; }
 
-        //public List<CategoryViewModel> Categories {get;set;}   LISTA TA KATEGORIJI
+        public List<CategoryViewModel> Categories {get;set;}   //LISTA TA KATEGORIJI
     }
 }

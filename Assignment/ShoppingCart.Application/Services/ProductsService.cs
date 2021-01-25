@@ -40,6 +40,12 @@ namespace ShoppingCart.Application.Services
             if (p == null) return null;
             return (_mapper.Map<ProductViewModel>(p));
         }
+        public ProductViewModel GetProductByCat(int categoryId) //return details
+        {
+            var p = GetProducts().SingleOrDefault(x => x.Category.Id == categoryId);
+            if (p == null) return null;
+            return (_mapper.Map<ProductViewModel>(p));
+        }
 
         public IQueryable<ProductViewModel> GetProducts()//convert IQuesryable<product> to iqueryable<productViewmodel>
         {

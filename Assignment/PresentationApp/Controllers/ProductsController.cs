@@ -22,6 +22,22 @@ namespace PresentationApp.Controllers
             _categoriesService = categoriesService;
             _webHostingEnviornment = env;
         }
+        public IActionResult Search(int category)
+        {
+            var list = _prodService.GetProductByCat(category);
+            return View("Index", list);
+        }
+        /*public IActionResult AddToCart(Guid id)
+        {
+
+           // var list = _categoriesService.GetCategories();
+
+            //CreateModel model = new CreateModel();
+
+            //model.Categories = list.ToList();
+
+            //return View(model);
+        }*/
         public IActionResult Index()
         {
             try

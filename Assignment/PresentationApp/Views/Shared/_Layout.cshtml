@@ -26,8 +26,17 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Support" asp-action="Contact">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Support" asp-action="Contact">Contact Us</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                        </li>
+                        @if (User.IsInRole("mgr"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Create">Create</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
